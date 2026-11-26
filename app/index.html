@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alvarez Family Budget</title>
+<meta name="description" content="One household's budget, kept in the open: the month's statement, the twelve budget lines, every purchase, three savings goals, and the bills calendar.">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="main.js"></script>
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-inner">
+    <div>
+      <a class="wordmark" href="#/">Alvarez Family Budget</a>
+      <p class="tagline"><span>A household ledger</span><span>Maya, Daniel &amp; Sofia</span><span>Austin, Texas</span></p>
+    </div>
+    <div class="month-switch" id="month-switch" role="group" aria-label="Choose a month">
+      <button type="button" data-month="2026-09">Sep 2026</button>
+      <button type="button" data-month="2026-10">Oct 2026</button>
+      <button type="button" data-month="2026-11">Nov 2026</button>
+    </div>
+  </div>
+  <nav aria-label="Sections">
+    <a href="#/">Statement</a>
+    <a href="#/budget">Monthly budget</a>
+    <a href="#/transactions">Spending log</a>
+    <a href="#/goals">Savings goals</a>
+    <a href="#/bills">Bills &amp; due dates</a>
+  </nav>
+</header>
+<main id="app"></main>
+<footer>
+  <p>Every figure is this household’s own record for September–November 2026. US comparisons come from the Bureau of Labor Statistics, Consumer Expenditure Survey 2024 (news release USDL-25-1586, 19 Dec 2025), and the Bureau of Economic Analysis personal saving rate for 2024. The 50/30/20 rule of thumb is from <em>All Your Worth</em> (Elizabeth Warren &amp; Amelia Warren Tyagi, 2005). Figures are rounded to whole dollars.</p>
+  <p>Built as a static site: no accounts, no tracking, no network requests. Edits you make — a moved budget line, a purchase added, a bill marked paid — are saved only in this browser.</p>
+</footer>
+</body>
+</html>

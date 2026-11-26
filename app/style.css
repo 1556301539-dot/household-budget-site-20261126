@@ -1,0 +1,229 @@
+/* Alvarez Family Budget — the household ledger, second pass.
+   Theme "Passbook" (custom, theme-factory Create-Your-Own): a printed bank
+   statement, not a dashboard. White paper, trust-navy ink, one bank blue,
+   ledger red only where money is over or due, gold kept to a single chart
+   line. One type family — system sans, weight and size do the hierarchy.
+   No serif display, no cream paper, no brass, no card boxes: sections are
+   divided by rules, the way a statement is. */
+
+:root {
+  --paper: #ffffff;
+  --ink: #0f172a;
+  --ink-soft: #334155;
+  --muted: #64748b;
+  --rule: #d8dee6;
+  --wash: #f1f5f9;
+  --blue: #1e3a8a;
+  --red: #b42318;
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Masthead: a statement letterhead. A 4px ink rule on top, white paper,
+   wordmark left, household and period right. No dark band. */
+.masthead { background: var(--paper); border-top: 4px solid var(--ink); border-bottom: 1px solid var(--rule); }
+.masthead-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 18px 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.wordmark {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.tagline { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.tagline span + span { border-left: 1px solid var(--rule); padding-left: 10px; margin-left: 10px; }
+.month-switch { display: flex; gap: 0; padding-bottom: 12px; }
+.month-switch button {
+  background: var(--paper);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.month-switch button + button { border-left: none; }
+.month-switch button.active { background: var(--ink); border-color: var(--ink); color: #fff; font-weight: 700; }
+.month-switch button:focus-visible, nav a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+nav {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 12px 14px 11px;
+  font-size: 15px;
+  border-bottom: 3px solid transparent;
+}
+nav a:hover { color: var(--ink); }
+nav a.active { color: var(--ink); border-bottom-color: var(--blue); font-weight: 700; }
+
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 24px 40px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 8px;
+}
+h2 { font-size: 18px; font-weight: 800; margin: 0 0 12px; }
+.lede { font-size: 17px; color: var(--ink-soft); max-width: 72ch; margin: 0 0 24px; }
+.muted { color: var(--muted); font-size: 14px; }
+a { color: var(--blue); }
+.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* The four statement figures: one bold strip. A 3px ink rule on top and a
+   double rule underneath, like a statement's balance block. No tinted cell,
+   no card — the strip itself is the memorable element. */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px double var(--ink);
+  margin: 0 0 28px;
+}
+.stat { padding: 16px 18px 18px; border-left: 1px solid var(--rule); }
+.stat:first-child { border-left: none; }
+.stat-label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.stat-value { display: block; font-size: 38px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat-note { display: block; font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* Two-column rows. Sections are divided by rules, not boxes. */
+.cols { display: grid; grid-template-columns: 1.35fr 1fr; gap: 28px; margin-bottom: 28px; }
+.panel { margin-bottom: 28px; }
+.cols .panel { margin-bottom: 0; }
+.panel h2 { border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.ring-wrap { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.legend { list-style: none; margin: 0; padding: 0; font-size: 15px; }
+.legend li { padding: 3px 0; }
+.legend b { font-variant-numeric: tabular-nums; }
+.dot { display: inline-block; width: 11px; height: 11px; margin-right: 8px; }
+
+.alerts { border-left: 4px solid var(--red); padding-left: 16px; }
+.alerts.good { border-left-color: var(--blue); }
+.alerts ul { margin: 0; padding-left: 20px; }
+.alerts li { padding: 3px 0; }
+
+/* Ledger tables: hairline rules, right-aligned money, double rule above
+   the totals. */
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.ledger th, .ledger td { padding: 10px 8px; border-bottom: 1px solid var(--rule); vertical-align: middle; text-align: left; }
+.ledger thead th { border-bottom: 2px solid var(--ink); font-size: 13px; color: var(--muted); font-weight: 600; }
+.ledger tfoot td { border-top: 3px double var(--ink); border-bottom: none; }
+.ledger tr.is-over td { background: #fdf2f2; }
+.ledger .note { display: block; font-size: 13px; color: var(--muted); font-weight: 400; }
+.flag { font-size: 14px; font-weight: 600; }
+.flag.over { color: var(--red); }
+.bench td, .bench th { padding: 8px 6px; border-bottom: 1px solid var(--rule); }
+.bench thead th { border-bottom: 2px solid var(--ink); }
+
+/* Sliders and fields. */
+.slider-cell { min-width: 250px; }
+.slider-cell input[type="range"] { width: 150px; accent-color: var(--blue); vertical-align: middle; }
+.slider-cell input[type="number"] { width: 84px; padding: 6px 8px; border: 1px solid var(--rule); font: inherit; margin-left: 8px; }
+button {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 9px 16px;
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+button:hover { background: var(--blue); }
+.actions { margin-top: 16px; }
+
+/* Add-spending form. */
+.add-form {
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: end;
+  background: var(--wash); border: 1px solid var(--rule);
+  padding: 16px 18px; margin-bottom: 20px;
+}
+.add-form label { font-size: 14px; color: var(--ink-soft); display: flex; flex-direction: column; gap: 4px; }
+.add-form input, .add-form select { padding: 8px 10px; border: 1px solid var(--rule); font: inherit; background: #fff; }
+.add-form input[type="text"] { width: 220px; }
+.filter-row { margin: 0 0 12px; }
+.filter-row select { padding: 7px 10px; border: 1px solid var(--rule); font: inherit; background: #fff; }
+
+/* Goals. */
+.goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.goal-card { margin-bottom: 0; }
+.goal-card h2 { border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.goal-figure { margin: 0 0 10px; }
+.goal-saved { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.goal-mini { padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.goal-mini:last-child { border-bottom: none; }
+.goal-mini-head { display: flex; justify-content: space-between; gap: 12px; font-size: 15px; }
+.bar { height: 10px; background: #e8ecf1; margin: 8px 0; }
+.bar span { display: block; height: 100%; background: var(--blue); }
+.bar.big { height: 14px; }
+.goal-add { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 14px 0 0; }
+.goal-add button { padding: 7px 12px; font-size: 14px; }
+.goal-add input { width: 76px; padding: 7px 8px; border: 1px solid var(--rule); font: inherit; }
+
+/* Bills. */
+.badge { display: inline-block; padding: 3px 10px; font-size: 13px; font-weight: 700; }
+.badge.paid { background: #e8ecf1; color: var(--blue); }
+.badge.due { background: #fdecea; color: var(--red); }
+.badge.upcoming { background: var(--wash); color: var(--ink-soft); }
+
+footer {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+  color: var(--muted);
+  font-size: 13px;
+  border-top: 1px solid var(--rule);
+}
+footer p { max-width: 90ch; }
+
+@media (max-width: 860px) {
+  .cols, .goals-grid { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stat:nth-child(3) { border-left: none; }
+  .stat { border-top: 1px solid var(--rule); }
+  .stat:nth-child(-n+2) { border-top: none; }
+  h1 { font-size: 24px; }
+  .wordmark { font-size: 22px; }
+  .slider-cell { min-width: 0; }
+  .slider-cell input[type="range"] { width: 110px; }
+  .ledger { font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
